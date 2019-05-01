@@ -9,7 +9,7 @@ setup(
     author='Joe Borg',
     author_email='joe@josephb.org',
     description='Drive Containerd and Docker from one CLI',
-    packages=['conctl'],
+    packages=['conctl', 'conctl/bin'],
     install_requires=[
         'click',
     ],

@@ -7,7 +7,7 @@ Drive Containerd and Docker from one CLI.
 `conctl` requires Python 3.5 and up.
 
 ```bash
-pip install conctl
+sudo pip install conctl
 ```
 
 ## Motivation
@@ -32,7 +32,7 @@ Running the same command, on differnt hosts.  One with Docker installed,
 the other with Containerd.
 
 ```bash
-$ sudo python3 conctl.py --verbose run --name hi docker.io/library/hello-world:latest
+$ sudo conctl --verbose run --name hi docker.io/library/hello-world:latest
 Runtime docker selected
 
 Hello from Docker!
@@ -58,7 +58,7 @@ For more examples and ideas, visit:
 ```
 
 ```bash
-$ sudo python3 conctl.py --verbose run --name hi docker.io/library/hello-world:latest
+$ sudo conctl --verbose run --name hi docker.io/library/hello-world:latest
 Runtime containerd selected
 
 Hello from Docker!
@@ -81,4 +81,13 @@ Share images, automate workflows, and more with a free Docker ID:
 
 For more examples and ideas, visit:
  https://docs.docker.com/get-started/
+```
+
+We can also import the factory method if we want to use it in code.
+
+```python
+from conctl import getContainerRuntimeCtl
+
+ctl = getContainerRuntimeCtl()
+ctl.run(name='hi', image='docker.io/library/hello-world:latest', mounts={}, environment={})
 ```
