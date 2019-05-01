@@ -2,6 +2,14 @@
 
 Drive Containerd and Docker from one CLI.
 
+## Installation
+
+`conctl` requires Python 3.5 and up.
+
+```bash
+pip install conctl
+```
+
 ## Motivation
 
 It's currently a pain to have to 'if' every script that needs to drive either
@@ -16,6 +24,7 @@ to do list would be massive, but here are the highlights:
 * Complete API and CLI for basic operations.
 * Better way to detect runtimes.
 * Drive via CRI, rather than shell calls.
+* Tests!
 
 ## Example
 
