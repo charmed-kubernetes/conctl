@@ -26,22 +26,24 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
     def run(self,
             name: str,
             image: str,
-            mounts: Dict[str, str],
-            environment: Dict[str, str],
-            net_host: bool,
+            mounts: Dict[str, str] = {},
+            environment: Dict[str, str] = {},
+            net_host: bool = False,
+            privileged: bool = False,
             command: str = None,
-            *args: List[str]) -> CompletedProcess:
+            *args: List[str]) -> str:
         """
         Run a container.
 
         :param name: String
         :param image: String
         :param mounts: Dictionary String host path String container path
-        :param environment: Dictionary String key String value
+        :param environment:  Dictionary String key String value
         :param net_host: Boolean
+        :param privileged: Boolean
         :param command: String
         :param args: List String
-        :return: CompletedProcess
+        :return: String output
         """
         to_run: list = [
             'run'
@@ -59,6 +61,9 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
 
         if net_host:
             to_run.append('--net-host')
+
+        if privileged:
+            to_run.append('--privileged')
 
         to_run.append(image)
         to_run.append(name)

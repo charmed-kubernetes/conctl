@@ -62,7 +62,9 @@ def cli(context: object,
 @click.option('--env', required=False, multiple=True,
               help='Pass env vars in format `key=value`')
 @click.option('--net-host', required=False, is_flag=True,
-              help='Use host networks')
+              help='Use host networking')
+@click.option('--privileged', required=False, is_flag=True,
+              help='Run privileged container')
 @click.argument('image', required=True)
 @click.argument('command', required=False)
 @click.argument('args', required=False, nargs=-1)
@@ -71,6 +73,8 @@ def run(ctl: object,
         name: str,
         mount: Tuple[str],
         env: Tuple[str],
+        net_host: bool,
+        privileged: bool,
         image: str,
         command: str,
         args: Tuple[str]) -> None:
@@ -100,6 +104,8 @@ def run(ctl: object,
         image=image,
         mounts=mounts,
         environment=environment,
+        net_host=net_host,
+        privileged=privileged,
         command=command,
         *args
     ))

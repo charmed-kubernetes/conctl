@@ -28,9 +28,10 @@ class ContainerRuntimeCtlBase(object):
     def run(self,
             name: str,
             image: str,
-            mounts: Dict[str, str],
-            environment: Dict[str, str],
-            net_host: bool,
+            mounts: Dict[str, str] = {},
+            environment: Dict[str, str] = {},
+            net_host: bool = False,
+            privileged: bool = False,
             command: str = None,
             *args: List[str]) -> str:
         """
@@ -41,6 +42,7 @@ class ContainerRuntimeCtlBase(object):
         :param mounts: Dictionary String host path String container path
         :param environment:  Dictionary String key String value
         :param net_host: Boolean
+        :param privileged: Boolean
         :param command: String
         :param args: List String
         :return: String output
