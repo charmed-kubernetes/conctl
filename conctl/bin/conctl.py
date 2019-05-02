@@ -87,7 +87,7 @@ def run(ctl: object,
 
     environment: Dict[str, str] = {}
     for e in env:
-        s: List[str] = e.splt('=')
+        s: List[str] = e.split('=')
         try:
             environment[s[0]] = [s[1]]
         except IndexError:
