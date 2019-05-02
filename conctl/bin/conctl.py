@@ -61,6 +61,8 @@ def cli(context: object,
               help='Pass mounts in format `host:container`')
 @click.option('--env', required=False, multiple=True,
               help='Pass env vars in format `key=value`')
+@click.option('--net-host', required=False, is_flag=True,
+              help='Use host networks')
 @click.argument('image', required=True)
 @click.argument('command', required=False)
 @click.argument('args', required=False, nargs=-1)

@@ -30,6 +30,7 @@ class ContainerRuntimeCtlBase(object):
             image: str,
             mounts: Dict[str, str],
             environment: Dict[str, str],
+            net_host: bool,
             command: str = None,
             *args: List[str]) -> str:
         """
@@ -39,6 +40,7 @@ class ContainerRuntimeCtlBase(object):
         :param image: String
         :param mounts: Dictionary String host path String container path
         :param environment:  Dictionary String key String value
+        :param net_host: Boolean
         :param command: String
         :param args: List String
         :return: String output

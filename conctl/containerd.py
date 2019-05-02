@@ -28,6 +28,7 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
             image: str,
             mounts: Dict[str, str],
             environment: Dict[str, str],
+            net_host: bool,
             command: str = None,
             *args: List[str]) -> CompletedProcess:
         """
@@ -37,6 +38,7 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
         :param image: String
         :param mounts: Dictionary String host path String container path
         :param environment: Dictionary String key String value
+        :param net_host: Boolean
         :param command: String
         :param args: List String
         :return: CompletedProcess
@@ -54,6 +56,9 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
         for key, value in environment.items():
             to_run.append('--env')
             to_run.append('{}={}'.format(key, value))
+
+        if net_host:
+            to_run.append('--net-host')
 
         to_run.append(image)
         to_run.append(name)
