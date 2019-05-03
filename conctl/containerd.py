@@ -31,7 +31,7 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
             net_host: bool = False,
             privileged: bool = False,
             command: str = None,
-            *args: List[str]) -> str:
+            args: List[str] = []) -> str:
         """
         Run a container.
 
@@ -70,6 +70,8 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
 
         if command:
             to_run.append(command)
+
+        if args:
             to_run += args
 
         return self._exec(*to_run)

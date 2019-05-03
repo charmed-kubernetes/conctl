@@ -33,7 +33,7 @@ class ContainerRuntimeCtlBase(object):
             net_host: bool = False,
             privileged: bool = False,
             command: str = None,
-            *args: List[str]) -> str:
+            args: List[str] = []) -> str:
         """
         Run a container.
 

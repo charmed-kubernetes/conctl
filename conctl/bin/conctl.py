@@ -107,7 +107,7 @@ def run(ctl: object,
         net_host=net_host,
         privileged=privileged,
         command=command,
-        *args
+        args=args
     ))
 
 
