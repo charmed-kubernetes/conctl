@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 from subprocess import (
     run as sub_run,
     CompletedProcess,
@@ -55,5 +55,18 @@ class ContainerRuntimeCtlBase(object):
 
         :param container_ids: List String
         :return: String output
+        """
+        raise NotImplementedError
+
+    def pull(self,
+             urls: List[str],
+             username: Optional[str] = None,
+             password: Optional[str] = None) -> CompletedProcess:
+        """
+        Pull images.
+
+        :param urls: List String
+        :param username: String
+        :param password: String
         """
         raise NotImplementedError

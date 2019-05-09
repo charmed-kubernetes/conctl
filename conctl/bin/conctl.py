@@ -95,7 +95,7 @@ def run(ctl: object,
     for e in env:
         s: List[str] = e.split('=')
         try:
-            environment[s[0]] = [s[1]]
+            environment[s[0]] = s[1]
         except IndexError:
             sys.exit('{} is not a valid arg for env'.format(s))
 
@@ -122,6 +122,29 @@ def delete(ctl: object,
     :return: None
     """
     pretty_print(ctl.delete(*container_ids))
+
+
+@cli.command()
+@click.option('--username', required=False,
+              help='Registry username')
+@click.option('--password', required=False,
+              help='Registry password')
+@click.argument('urls', required=False, nargs=-1)
+@click.pass_obj
+def pull(ctl: object,
+         username: Optional[str],
+         password: Optional[str],
+         urls: List[str]) -> None:
+    """
+    Pull images.
+
+    :return: None
+    """
+    pretty_print(ctl.pull(
+        urls,
+        username=username,
+        password=password
+    ))
 
 
 if __name__ == '__main__':

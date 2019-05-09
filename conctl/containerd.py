@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from conctl.base import ContainerRuntimeCtlBase, CompletedProcess
 
@@ -30,7 +30,7 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
             environment: Dict[str, str] = {},
             net_host: bool = False,
             privileged: bool = False,
-            command: str = None,
+            command: Optional[str] = None,
             args: List[str] = []) -> str:
         """
         Run a container.
@@ -86,3 +86,28 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
         return self._exec(
             'container', 'delete', *container_ids
         )
+
+    def pull(self,
+             urls: List[str],
+             username: Optional[str] = None,
+             password: Optional[str] = None) -> CompletedProcess:
+        """
+        Pull images.
+
+        :param urls: List String
+        :param username: String
+        :param password: String
+        """
+        if isinstance(urls, str):
+            urls = [urls]
+
+        for url in urls:
+            return self._exec(
+                'image',
+                'pull',
+                '--user={}:{}'.format(
+                    username,
+                    password
+                ),
+                url
+            )
