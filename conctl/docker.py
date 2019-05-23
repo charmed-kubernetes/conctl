@@ -30,6 +30,7 @@ class DockerCtl(ContainerRuntimeCtlBase):
             environment: Dict[str, str] = {},
             net_host: bool = False,
             privileged: bool = False,
+            remove: bool = True,
             command: Optional[str] = None,
             args: List[str] = []) -> str:
         """
@@ -41,6 +42,7 @@ class DockerCtl(ContainerRuntimeCtlBase):
         :param environment:  Dictionary String key String value
         :param net_host: Boolean
         :param privileged: Boolean
+        :param remove: Boolean
         :param command: String
         :param args: List String
         :return: String output
@@ -63,6 +65,9 @@ class DockerCtl(ContainerRuntimeCtlBase):
 
         if privileged:
             to_run.append('--privileged')
+
+        if remove:
+            to_run.append('--rm')
 
         to_run.append(image)
 

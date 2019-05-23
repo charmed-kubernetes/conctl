@@ -65,6 +65,8 @@ def cli(context: object,
               help='Use host networking')
 @click.option('--privileged', required=False, is_flag=True,
               help='Run privileged container')
+@click.option('--rm', required=False, is_flag=True,
+              help='Remove when container exits')
 @click.argument('image', required=True)
 @click.argument('command', required=False)
 @click.argument('args', required=False, nargs=-1)
@@ -75,6 +77,7 @@ def run(ctl: object,
         env: Tuple[str],
         net_host: bool,
         privileged: bool,
+        rm: bool,
         image: str,
         command: str,
         args: Tuple[str]) -> None:
@@ -106,6 +109,7 @@ def run(ctl: object,
         environment=environment,
         net_host=net_host,
         privileged=privileged,
+        remove=rm,
         command=command,
         args=args
     ))

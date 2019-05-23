@@ -32,7 +32,8 @@ class ContainerRuntimeCtlBase(object):
             environment: Dict[str, str] = {},
             net_host: bool = False,
             privileged: bool = False,
-            command: str = None,
+            remove: bool = True,
+            command: Optional[str] = None,
             args: List[str] = []) -> str:
         """
         Run a container.
@@ -43,6 +44,7 @@ class ContainerRuntimeCtlBase(object):
         :param environment:  Dictionary String key String value
         :param net_host: Boolean
         :param privileged: Boolean
+        :param remove: Boolean
         :param command: String
         :param args: List String
         :return: String output
