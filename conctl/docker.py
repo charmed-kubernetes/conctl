@@ -105,12 +105,13 @@ class DockerCtl(ContainerRuntimeCtlBase):
             urls = [urls]
 
         for url in urls:
-            self._exec(
-                'login',
-                url,
-                '-u', username,
-                '-p', password
-            )
+            if username or password:
+                self._exec(
+                    'login',
+                    url,
+                    '-u', username,
+                    '-p', password
+                )
 
             return self._exec(
                 'pull',
