@@ -107,12 +107,8 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
             urls = [urls]
 
         for url in urls:
-            return self._exec(
-                'image',
-                'pull',
-                '--user={}:{}'.format(
-                    username,
-                    password
-                ),
-                url
-            )
+            args = ['image', 'pull']
+            if username or password:
+                args.append('--user={}:{}'.format(username, password))
+            args.append(url)
+            return self._exec(*args)
