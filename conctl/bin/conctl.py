@@ -13,22 +13,6 @@ from typing import (
 from conctl import getContainerRuntimeCtl
 
 
-def pretty_print(proc: CompletedProcess) -> None:
-    """
-    Pretty print output from a process.
-
-    :param proc: CompletedProcess
-    :return: None
-    """
-    sys.stdout.write(
-        proc.stdout.decode()
-    )
-
-    sys.stderr.write(
-        proc.stderr.decode()
-    )
-
-
 @click.group()
 @click.option('--force-runtime', default=None,
               type=click.Choice(['docker', 'containerd']),
@@ -47,7 +31,7 @@ def cli(context: object,
     :param verbose: Boolean
     :return: None
     """
-    context.obj = getContainerRuntimeCtl(force_runtime)
+    context.obj = getContainerRuntimeCtl(force_runtime, pipe=False)
 
     if verbose:
         print('Runtime {} selected'.format(
@@ -102,7 +86,7 @@ def run(ctl: object,
         except IndexError:
             sys.exit('{} is not a valid arg for env'.format(s))
 
-    pretty_print(ctl.run(
+    ctl.run(
         name=name,
         image=image,
         mounts=mounts,
@@ -112,7 +96,7 @@ def run(ctl: object,
         remove=rm,
         command=command,
         args=args
-    ))
+    )
 
 
 @cli.command()
@@ -125,7 +109,7 @@ def delete(ctl: object,
 
     :return: None
     """
-    pretty_print(ctl.delete(*container_ids))
+    ctl.delete(*container_ids)
 
 
 @cli.command()
@@ -144,11 +128,11 @@ def pull(ctl: object,
 
     :return: None
     """
-    pretty_print(ctl.pull(
+    ctl.pull(
         urls,
         username=username,
         password=password
-    ))
+    )
 
 
 if __name__ == '__main__':

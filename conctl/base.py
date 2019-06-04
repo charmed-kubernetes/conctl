@@ -10,20 +10,25 @@ class ContainerRuntimeCtlBase(object):
     """
     Base class for Container Runtime ctls.
     """
-    def __init__(self) -> None:
+    def __init__(self, pipe=True) -> None:
         """
+        :param pipe: Boolean pipe std*
         :return: None
         """
+        self.pipe = pipe
         self.runtime = None
 
-    def _exec(self, *args) -> CompletedProcess:
+    def _exec(self, *args: List[str]) -> CompletedProcess:
         """
         Call the underlying CLI.
 
         :param args: List arguments
         :return: CompletedProcess
         """
-        return sub_run(args, stdout=PIPE, stderr=PIPE)
+        if self.pipe:
+            return sub_run(args, stdout=PIPE, stderr=PIPE)
+
+        return return sub_run(args)
 
     def run(self,
             name: str,

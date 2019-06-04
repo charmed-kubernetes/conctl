@@ -7,11 +7,12 @@ class DockerCtl(ContainerRuntimeCtlBase):
     """
     Control Containerd via `docker`.
     """
-    def __init__(self) -> None:
+    def __init__(self, pipe=True) -> None:
         """
+        :param pipe: Boolean pipe std*
         :return: None
         """
-        super().__init__()
+        super().__init__(pipe)
         self.runtime = 'docker'
 
     def _exec(self, *args: List[str]) -> CompletedProcess:

@@ -7,11 +7,12 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
     """
     Control Containerd via `ctr`.
     """
-    def __init__(self) -> None:
+    def __init__(self, pipe=True) -> None:
         """
+        :param pipe: Boolean pipe std*
         :return: None
         """
-        super().__init__()
+        super().__init__(pipe)
         self.runtime = 'containerd'
 
     def _exec(self, *args: List[str]) -> CompletedProcess:

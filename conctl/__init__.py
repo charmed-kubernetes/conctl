@@ -28,12 +28,13 @@ def _detectContainerRuntime():
     raise RuntimeError('Cannot detect a container runtime')
 
 
-def getContainerRuntimeCtl(runtime=None):
+def getContainerRuntimeCtl(runtime=None, pipe=True):
     """
     Factory method which returns a
     Container Runtime ctl.
 
     :param runtime: String runtime
+    :param pipe: Boolean pipe std*
     :return: ContainerRuntimeCtl
     """
     supported = {
@@ -45,7 +46,7 @@ def getContainerRuntimeCtl(runtime=None):
         runtime = _detectContainerRuntime()
 
     try:
-        return supported[runtime]()
+        return supported[runtime](pipe)
     except IndexError:
         raise NotImplementedError(
             '{} runtime is not supported'.format(runtime))
