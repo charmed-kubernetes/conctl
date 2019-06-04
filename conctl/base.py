@@ -28,7 +28,7 @@ class ContainerRuntimeCtlBase(object):
         if self.pipe:
             return sub_run(args, stdout=PIPE, stderr=PIPE)
 
-        return return sub_run(args)
+        return sub_run(args)
 
     def run(self,
             name: str,
