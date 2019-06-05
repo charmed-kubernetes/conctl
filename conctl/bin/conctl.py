@@ -1,7 +1,6 @@
 #!/bin/env python3
 import sys
 import click
-from subprocess import CompletedProcess
 
 from typing import (
     List,
