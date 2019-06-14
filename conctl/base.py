@@ -56,12 +56,13 @@ class ContainerRuntimeCtlBase(object):
         """
         raise NotImplementedError
 
-    def delete(self, *container_ids: List[str]) -> None:
+    def delete(self,
+               *container_ids: List[str]) -> CompletedProcess:
         """
         Delete a container.
 
         :param container_ids: List String
-        :return: String output
+        :return: CompletedProcess
         """
         raise NotImplementedError
 
@@ -75,5 +76,16 @@ class ContainerRuntimeCtlBase(object):
         :param urls: List String
         :param username: String
         :param password: String
+        :return: CompletedProcess
+        """
+        raise NotImplementedError
+
+    def load(self,
+             path: str) -> CompletedProcess:
+        """
+        Load an image.
+
+        :param path: String file path
+        :return: CompletedProcess
         """
         raise NotImplementedError

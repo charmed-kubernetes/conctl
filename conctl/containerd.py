@@ -116,3 +116,15 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
                 args.append('--user={}:{}'.format(username, password))
             args.append(url)
             return self._exec(*args)
+
+    def load(self,
+             path: str) -> CompletedProcess:
+        """
+        Load an image.
+
+        :param path: String file path
+        :return: CompletedProcess
+        """
+        return self._exec(
+            'image', 'import', path
+        )

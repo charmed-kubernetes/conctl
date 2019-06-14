@@ -116,7 +116,7 @@ def delete(ctl: object,
               help='Registry username')
 @click.option('--password', required=False,
               help='Registry password')
-@click.argument('urls', required=False, nargs=-1)
+@click.argument('urls', required=True, nargs=-1)
 @click.pass_obj
 def pull(ctl: object,
          username: Optional[str],
@@ -131,6 +131,21 @@ def pull(ctl: object,
         urls,
         username=username,
         password=password
+    )
+
+
+@cli.command()
+@click.argument('path', required=True)
+@click.pass_obj
+def load(ctl: object,
+         path: str) -> None:
+    """
+    Load an image.
+
+    :return: None
+    """
+    ctl.load(
+        path
     )
 
 

@@ -118,3 +118,15 @@ class DockerCtl(ContainerRuntimeCtlBase):
                 'pull',
                 url
             )
+
+    def load(self,
+             path: str) -> CompletedProcess:
+        """
+        Load an image.
+
+        :param path: String file path
+        :return: CompletedProcess
+        """
+        return self._exec(
+            'load', '--input', path
+        )
