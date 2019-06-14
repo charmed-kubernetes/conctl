@@ -4,7 +4,7 @@ Drive Containerd and Docker from one CLI.
 
 ## Installation
 
-`conctl` requires Python 3.5 and up.
+`conctl` requires Python 3.6 and up.
 
 ```bash
 sudo pip install conctl
@@ -14,7 +14,7 @@ sudo pip install conctl
 
 It's currently a pain to have to 'if' every script that needs to drive either
 Docker or Containerd.  It'd be nice to have a single CLI that can drive at
-least basic funtionality in both.
+least basic functionality in both.
 
 ## Current State
 
@@ -28,7 +28,7 @@ to do list would be massive, but here are the highlights:
 
 ## Example
 
-Running the same command, on differnt hosts.  One with Docker installed,
+Running the same command, on different hosts.  One with Docker installed,
 the other with Containerd.
 
 ```bash

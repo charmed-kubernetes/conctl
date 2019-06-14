@@ -23,12 +23,7 @@ def cli(context: object,
         force_runtime: Optional[str],
         verbose: bool) -> None:
     """
-    Base for the CLI.
-
-    :param context: Object
-    :param force_runtime: String
-    :param verbose: Boolean
-    :return: None
+    Drive Containerd and Docker from one CLI.
     """
     context.obj = getContainerRuntimeCtl(force_runtime, pipe=False)
 
