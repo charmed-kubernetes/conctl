@@ -6,7 +6,7 @@ authors = ["Joe Borg <joe@josephb.org>"]
 license = "Apache-2.0"
 
 [tool.poetry.dependencies]
-python = "^3.5"
+python = "^3.6"
 click = "^7.0"
 
 [tool.poetry.dev-dependencies]
