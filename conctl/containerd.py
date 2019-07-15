@@ -48,7 +48,7 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
         :param args: List String
         :return: String output
         """
-        to_run: list = [
+        to_run = [
             'run'
         ]
 

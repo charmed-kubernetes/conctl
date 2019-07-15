@@ -64,17 +64,17 @@ def run(ctl: object,
 
     :return: None
     """
-    mounts: Dict[str, str] = {}
+    mounts = {}
     for m in mount:
-        s: List[str] = m.split(':')
+        s = m.split(':')
         try:
             mounts[s[0]] = s[1]
         except IndexError:
             sys.exit('{} is not a valid arg for mount'.format(s))
 
-    environment: Dict[str, str] = {}
+    environment = {}
     for e in env:
-        s: List[str] = e.split('=')
+        s = e.split('=')
         try:
             environment[s[0]] = s[1]
         except IndexError:

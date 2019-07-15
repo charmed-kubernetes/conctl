@@ -2,8 +2,8 @@ from setuptools import setup
 
 
 setup(
-    name='conctl',
-    version='0.0.22',
+    name='conctl-py35',
+    version='0.0.24',
     url='https://github.com/joedborg/conctl',
     license='Apache License 2.0',
     author='Joe Borg',
