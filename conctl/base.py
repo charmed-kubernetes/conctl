@@ -26,7 +26,7 @@ class ContainerRuntimeCtlBase(object):
         :return: CompletedProcess
         """
         if self.pipe:
-            return sub_run(args, stdout=PIPE, stderr=PIPE)
+            return sub_run(args, stdout=PIPE, stderr=PIPE, check=True)
 
         return sub_run(args)
 

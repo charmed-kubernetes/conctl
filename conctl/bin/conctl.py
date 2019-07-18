@@ -2,6 +2,8 @@
 import sys
 import click
 
+from subprocess import CompletedProcess
+
 from typing import (
     List,
     Tuple,
@@ -10,6 +12,17 @@ from typing import (
 )
 
 from conctl import getContainerRuntimeCtl
+
+
+def _exit(proc: CompletedProcess):
+    """
+    Forward the correct exit code from the
+    completed process.
+
+    :param proc: CompletedProcess
+    :return: None
+    """
+    sys.exit(proc.returncode)
 
 
 @click.group()
@@ -80,7 +93,7 @@ def run(ctl: object,
         except IndexError:
             sys.exit('{} is not a valid arg for env'.format(s))
 
-    ctl.run(
+    _exit(ctl.run(
         name=name,
         image=image,
         mounts=mounts,
@@ -90,7 +103,7 @@ def run(ctl: object,
         remove=rm,
         command=command,
         args=args
-    )
+    ))
 
 
 @cli.command()
@@ -103,7 +116,7 @@ def delete(ctl: object,
 
     :return: None
     """
-    ctl.delete(*container_ids)
+    _exit(ctl.delete(*container_ids))
 
 
 @cli.command()
@@ -122,11 +135,11 @@ def pull(ctl: object,
 
     :return: None
     """
-    ctl.pull(
+    _exit(ctl.pull(
         urls,
         username=username,
         password=password
-    )
+    ))
 
 
 @cli.command()
@@ -139,9 +152,9 @@ def load(ctl: object,
 
     :return: None
     """
-    ctl.load(
+    _exit(ctl.load(
         path
-    )
+    ))
 
 
 if __name__ == '__main__':
