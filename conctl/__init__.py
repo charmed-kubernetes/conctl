@@ -6,24 +6,27 @@ from conctl.docker import DockerCtl
 
 def _detectContainerRuntime():
     """
-    Attempt to detect the
-    container runtime.
+    Attempt to detect the container runtime.
+
+    It seems the `docker.io` package now ships
+    with `ctr`, so we've reversed these until
+    we figure a better way to do the detection.
 
     :return: String name
     """
-    try:
-        check_call(['ctr'], stdout=DEVNULL, stderr=DEVNULL)
-    except (FileNotFoundError, CalledProcessError):
-        pass
-    else:
-        return 'containerd'
-
     try:
         check_call(['docker'], stdout=DEVNULL, stderr=DEVNULL)
     except (FileNotFoundError, CalledProcessError):
         pass
     else:
         return 'docker'
+
+    try:
+        check_call(['ctr'], stdout=DEVNULL, stderr=DEVNULL)
+    except (FileNotFoundError, CalledProcessError):
+        pass
+    else:
+        return 'containerd'
 
     raise RuntimeError('Cannot detect a container runtime')
 
