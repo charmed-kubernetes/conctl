@@ -89,11 +89,8 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
         :param container_ids: List String
         :return: CompletedProcess
         """
-        for container_id in container_ids:
-            self._exec('task', 'kill', container_id)
-
         return self._exec(
-            'container', 'delete', *container_ids
+            'task', 'kill', '--all', *container_ids
         )
 
     def pull(self,
