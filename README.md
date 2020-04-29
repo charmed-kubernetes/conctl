@@ -91,3 +91,7 @@ from conctl import getContainerRuntimeCtl
 ctl = getContainerRuntimeCtl()
 ctl.run(name='hi', image='docker.io/library/hello-world:latest', mounts={}, environment={})
 ```
+
+## Feedback
+
+Please raise bugs and feature requests on [Launchpad](https://bugs.launchpad.net/charm-containerd).
