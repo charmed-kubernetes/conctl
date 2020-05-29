@@ -1,6 +1,9 @@
 from typing import Dict, List, Optional
 
-from conctl.base import ContainerRuntimeCtlBase, CompletedProcess
+from conctl.base import (
+    ContainerRuntimeCtlBase,
+    CompletedProcess
+)
 
 
 class DockerCtl(ContainerRuntimeCtlBase):

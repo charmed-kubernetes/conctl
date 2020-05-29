@@ -2,6 +2,7 @@ from typing import Dict, List, Optional
 from subprocess import (
     run as sub_run,
     CompletedProcess,
+    CalledProcessError
     PIPE
 )
 

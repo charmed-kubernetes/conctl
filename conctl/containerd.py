@@ -1,6 +1,10 @@
 from typing import Dict, List, Optional
 
-from conctl.base import ContainerRuntimeCtlBase, CompletedProcess
+from conctl.base import (
+    ContainerRuntimeCtlBase,
+    CompletedProcess,
+    CalledProcessError
+)
 
 
 class ContainerdCtl(ContainerRuntimeCtlBase):
@@ -110,7 +114,7 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
             return self._exec(
                 'container', 'delete', *container_ids
             )
-        except Exception:
+        except CalledProcessError:
             return killed
 
     def pull(self,
