@@ -2,7 +2,7 @@ from typing import Dict, List, Optional
 from subprocess import (
     run as sub_run,
     CompletedProcess,
-    CalledProcessError
+    CalledProcessError,  # noqa: F401
     PIPE
 )
 
@@ -58,7 +58,7 @@ class ContainerRuntimeCtlBase(object):
         raise NotImplementedError
 
     def stop(self,
-               *container_ids: List[str]) -> CompletedProcess:
+             *container_ids: List[str]) -> CompletedProcess:
         """
         Stop containers.
 
