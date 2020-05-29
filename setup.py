@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='conctl-py35',
-    version='0.1.1',
+    version='0.1.2',
     url='https://github.com/joedborg/conctl',
     license='Apache License 2.0',
     author='Joe Borg',
