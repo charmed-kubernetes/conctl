@@ -80,9 +80,20 @@ class DockerCtl(ContainerRuntimeCtlBase):
 
         return self._exec(*to_run)
 
+    def stop(self, *container_ids) -> CompletedProcess:
+        """
+        Stop containers.
+
+        :param container_ids: String
+        :return: CompletedProcess
+        """
+        return self._exec(
+            'stop', *container_ids
+        )
+
     def delete(self, *container_ids) -> CompletedProcess:
         """
-        Delete a container.
+        Delete containers.
 
         :param container_ids: String
         :return: CompletedProcess

@@ -109,6 +109,19 @@ def run(ctl: object,
 @cli.command()
 @click.argument('container_ids', required=False, nargs=-1)
 @click.pass_obj
+def stop(ctl: object,
+         container_ids: Tuple[str]) -> None:
+    """
+    Stop containers.
+
+    :return: None
+    """
+    _exit(ctl.stop(*container_ids))
+
+
+@cli.command()
+@click.argument('container_ids', required=False, nargs=-1)
+@click.pass_obj
 def delete(ctl: object,
            container_ids: Tuple[str]) -> None:
     """

@@ -82,16 +82,36 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
 
         return self._exec(*to_run)
 
-    def delete(self, *container_ids) -> CompletedProcess:
+    def stop(self, *container_ids) -> CompletedProcess:
         """
-        Delete a container.
+        Stop containers.
 
         :param container_ids: List String
         :return: CompletedProcess
         """
         return self._exec(
+            'task', 'pause', *container_ids
+        )
+
+    def delete(self, *container_ids) -> CompletedProcess:
+        """
+        Delete containers.
+
+        Try to kill all the tasks before the
+        container.
+
+        :param container_ids: List String
+        :return: CompletedProcess
+        """
+        killed = self._exec(
             'task', 'kill', '--all', *container_ids
         )
+        try:
+            return self._exec(
+                'container', 'delete', *container_ids
+            )
+        except Exception:
+            return killed
 
     def pull(self,
              urls: List[str],
