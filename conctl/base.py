@@ -2,6 +2,7 @@ from typing import Dict, List, Optional
 from subprocess import (
     run as sub_run,
     CompletedProcess,
+    CalledProcessError,  # noqa: F401
     PIPE
 )
 
@@ -56,10 +57,20 @@ class ContainerRuntimeCtlBase(object):
         """
         raise NotImplementedError
 
+    def stop(self,
+             *container_ids: List[str]) -> CompletedProcess:
+        """
+        Stop containers.
+
+        :param container_ids: List String
+        :return: CompletedProcess
+        """
+        raise NotImplementedError
+
     def delete(self,
                *container_ids: List[str]) -> CompletedProcess:
         """
-        Delete a container.
+        Delete containers.
 
         :param container_ids: List String
         :return: CompletedProcess
