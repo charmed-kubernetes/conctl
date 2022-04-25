@@ -5,13 +5,13 @@ from conctl import getContainerRuntimeCtl
 
 class BasicTests(unittest.TestCase):
     def setUp(self):
-        self.ctl = getContainerRuntimeCtl()
+        self.ctl = getContainerRuntimeCtl('containerd')
 
     def tearDown(self):
         pass
 
-    def assert_valid_runtime(self):
-        self.assertIn(self.ctl.runtime, ['docker', 'containerd'])
+    def test_valid_runtime(self):
+        self.assertEqual(self.ctl.runtime, 'containerd')
 
 
 if __name__ == '__main__':

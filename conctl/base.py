@@ -1,8 +1,8 @@
 from typing import Dict, List, Optional
-from subprocess import (
+from subprocess import (  # noqa: F401
     run as sub_run,
     CompletedProcess,
-    CalledProcessError,  # noqa: F401
+    CalledProcessError,
     PIPE
 )
 

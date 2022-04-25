@@ -116,6 +116,14 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
             )
         except CalledProcessError:
             return killed
+        finally:
+            # lp:1932052 ensure snapshots are removed on delete
+            try:
+                self._exec(
+                    'snapshot', 'rm', *container_ids
+                )
+            except CalledProcessError:
+                pass
 
     def pull(self,
              urls: List[str],
