@@ -1,4 +1,4 @@
-from subprocess import check_call, CalledProcessError, DEVNULL
+from subprocess import DEVNULL, CalledProcessError, check_call
 
 from conctl.containerd import ContainerdCtl
 from conctl.docker import DockerCtl
@@ -15,20 +15,20 @@ def _detectContainerRuntime():
     :return: String name
     """
     try:
-        check_call(['docker'], stdout=DEVNULL, stderr=DEVNULL)
+        check_call(["docker"], stdout=DEVNULL, stderr=DEVNULL)
     except (FileNotFoundError, CalledProcessError):
         pass
     else:
-        return 'docker'
+        return "docker"
 
     try:
-        check_call(['ctr'], stdout=DEVNULL, stderr=DEVNULL)
+        check_call(["ctr"], stdout=DEVNULL, stderr=DEVNULL)
     except (FileNotFoundError, CalledProcessError):
         pass
     else:
-        return 'containerd'
+        return "containerd"
 
-    raise RuntimeError('Cannot detect a container runtime')
+    raise RuntimeError("Cannot detect a container runtime")
 
 
 def getContainerRuntimeCtl(runtime=None, pipe=True):
@@ -40,10 +40,7 @@ def getContainerRuntimeCtl(runtime=None, pipe=True):
     :param pipe: Boolean pipe std*
     :return: ContainerRuntimeCtl
     """
-    supported = {
-        'containerd': ContainerdCtl,
-        'docker': DockerCtl
-    }
+    supported = {"containerd": ContainerdCtl, "docker": DockerCtl}
 
     if not runtime:
         runtime = _detectContainerRuntime()
@@ -51,5 +48,4 @@ def getContainerRuntimeCtl(runtime=None, pipe=True):
     try:
         return supported[runtime](pipe)
     except IndexError:
-        raise NotImplementedError(
-            '{} runtime is not supported'.format(runtime))
+        raise NotImplementedError("{} runtime is not supported".format(runtime))

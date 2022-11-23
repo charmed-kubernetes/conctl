@@ -1,22 +1,20 @@
 from typing import Dict, List, Optional
 
-from conctl.base import (
-    ContainerRuntimeCtlBase,
-    CompletedProcess
-)
+from conctl.base import CompletedProcess, ContainerRuntimeCtlBase
 
 
 class DockerCtl(ContainerRuntimeCtlBase):
     """
     Control Containerd via `docker`.
     """
+
     def __init__(self, pipe=True) -> None:
         """
         :param pipe: Boolean pipe std*
         :return: None
         """
         super().__init__(pipe)
-        self.runtime = 'docker'
+        self.runtime = "docker"
 
     def _exec(self, *args: List[str]) -> CompletedProcess:
         """
@@ -25,18 +23,20 @@ class DockerCtl(ContainerRuntimeCtlBase):
         :param args: List args
         :return: CompletedProcess
         """
-        return super()._exec(*['docker'] + list(args))
+        return super()._exec(*["docker"] + list(args))
 
-    def run(self,
-            name: str,
-            image: str,
-            mounts: Dict[str, str] = {},
-            environment: Dict[str, str] = {},
-            net_host: bool = False,
-            privileged: bool = False,
-            remove: bool = True,
-            command: Optional[str] = None,
-            args: List[str] = []) -> str:
+    def run(
+        self,
+        name: str,
+        image: str,
+        mounts: Dict[str, str] = {},
+        environment: Dict[str, str] = {},
+        net_host: bool = False,
+        privileged: bool = False,
+        remove: bool = True,
+        command: Optional[str] = None,
+        args: List[str] = [],
+    ) -> str:
         """
         Run a container.
 
@@ -51,27 +51,24 @@ class DockerCtl(ContainerRuntimeCtlBase):
         :param args: List String
         :return: String output
         """
-        to_run: list = [
-            'run',
-            '--name', name
-        ]
+        to_run: list = ["run", "--name", name]
 
         for host, container in mounts.items():
-            to_run.append('--volume')
-            to_run.append('{}:{}'.format(host, container))
+            to_run.append("--volume")
+            to_run.append("{}:{}".format(host, container))
 
         for key, value in environment.items():
-            to_run.append('--env')
-            to_run.append('{}={}'.format(key, value))
+            to_run.append("--env")
+            to_run.append("{}={}".format(key, value))
 
         if net_host:
-            to_run.append('--network=host')
+            to_run.append("--network=host")
 
         if privileged:
-            to_run.append('--privileged')
+            to_run.append("--privileged")
 
         if remove:
-            to_run.append('--rm')
+            to_run.append("--rm")
 
         to_run.append(image)
 
@@ -90,9 +87,7 @@ class DockerCtl(ContainerRuntimeCtlBase):
         :param container_ids: String
         :return: CompletedProcess
         """
-        return self._exec(
-            'stop', *container_ids
-        )
+        return self._exec("stop", *container_ids)
 
     def delete(self, *container_ids) -> CompletedProcess:
         """
@@ -101,14 +96,14 @@ class DockerCtl(ContainerRuntimeCtlBase):
         :param container_ids: String
         :return: CompletedProcess
         """
-        return self._exec(
-            'rm', '-f', *container_ids
-        )
+        return self._exec("rm", "-f", *container_ids)
 
-    def pull(self,
-             urls: List[str],
-             username: Optional[str] = None,
-             password: Optional[str] = None) -> CompletedProcess:
+    def pull(
+        self,
+        urls: List[str],
+        username: Optional[str] = None,
+        password: Optional[str] = None,
+    ) -> CompletedProcess:
         """
         Pull images.
 
@@ -121,26 +116,15 @@ class DockerCtl(ContainerRuntimeCtlBase):
 
         for url in urls:
             if username or password:
-                self._exec(
-                    'login',
-                    url,
-                    '-u', username,
-                    '-p', password
-                )
+                self._exec("login", url, "-u", username, "-p", password)
 
-            return self._exec(
-                'pull',
-                url
-            )
+            return self._exec("pull", url)
 
-    def load(self,
-             path: str) -> CompletedProcess:
+    def load(self, path: str) -> CompletedProcess:
         """
         Load an image.
 
         :param path: String file path
         :return: CompletedProcess
         """
-        return self._exec(
-            'load', '--input', path
-        )
+        return self._exec("load", "--input", path)
