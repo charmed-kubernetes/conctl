@@ -1,23 +1,20 @@
 from typing import Dict, List, Optional
 
-from conctl.base import (
-    ContainerRuntimeCtlBase,
-    CompletedProcess,
-    CalledProcessError
-)
+from conctl.base import CalledProcessError, CompletedProcess, ContainerRuntimeCtlBase
 
 
 class ContainerdCtl(ContainerRuntimeCtlBase):
     """
     Control Containerd via `ctr`.
     """
+
     def __init__(self, pipe=True) -> None:
         """
         :param pipe: Boolean pipe std*
         :return: None
         """
         super().__init__(pipe)
-        self.runtime = 'containerd'
+        self.runtime = "containerd"
 
     def _exec(self, *args: List[str]) -> CompletedProcess:
         """
@@ -26,18 +23,20 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
         :param args: List args
         :return: CompletedProcess
         """
-        return super()._exec(*['ctr'] + list(args))
+        return super()._exec(*["ctr"] + list(args))
 
-    def run(self,
-            name: str,
-            image: str,
-            mounts: Dict[str, str] = {},
-            environment: Dict[str, str] = {},
-            net_host: bool = False,
-            privileged: bool = False,
-            remove: bool = True,
-            command: Optional[str] = None,
-            args: List[str] = []) -> str:
+    def run(
+        self,
+        name: str,
+        image: str,
+        mounts: Dict[str, str] = {},
+        environment: Dict[str, str] = {},
+        net_host: bool = False,
+        privileged: bool = False,
+        remove: bool = True,
+        command: Optional[str] = None,
+        args: List[str] = [],
+    ) -> str:
         """
         Run a container.
 
@@ -52,28 +51,26 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
         :param args: List String
         :return: String output
         """
-        to_run: list = [
-            'run'
-        ]
+        to_run: list = ["run"]
 
         for host, container in mounts.items():
-            to_run.append('--mount')
+            to_run.append("--mount")
             to_run.append(
-                'type=bind,src={},dst={},options=rbind:rw'.format(
-                    host, container))
+                "type=bind,src={},dst={},options=rbind:rw".format(host, container)
+            )
 
         for key, value in environment.items():
-            to_run.append('--env')
-            to_run.append('{}={}'.format(key, value))
+            to_run.append("--env")
+            to_run.append("{}={}".format(key, value))
 
         if net_host:
-            to_run.append('--net-host')
+            to_run.append("--net-host")
 
         if privileged:
-            to_run.append('--privileged')
+            to_run.append("--privileged")
 
         if remove:
-            to_run.append('--rm')
+            to_run.append("--rm")
 
         to_run.append(image)
         to_run.append(name)
@@ -93,9 +90,7 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
         :param container_ids: List String
         :return: CompletedProcess
         """
-        return self._exec(
-            'task', 'pause', *container_ids
-        )
+        return self._exec("task", "pause", *container_ids)
 
     def delete(self, *container_ids) -> CompletedProcess:
         """
@@ -107,28 +102,24 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
         :param container_ids: List String
         :return: CompletedProcess
         """
-        killed = self._exec(
-            'task', 'kill', '--all', *container_ids
-        )
+        killed = self._exec("task", "kill", "--all", *container_ids)
         try:
-            return self._exec(
-                'container', 'delete', *container_ids
-            )
+            return self._exec("container", "delete", *container_ids)
         except CalledProcessError:
             return killed
         finally:
             # lp:1932052 ensure snapshots are removed on delete
             try:
-                self._exec(
-                    'snapshot', 'rm', *container_ids
-                )
+                self._exec("snapshot", "rm", *container_ids)
             except CalledProcessError:
                 pass
 
-    def pull(self,
-             urls: List[str],
-             username: Optional[str] = None,
-             password: Optional[str] = None) -> CompletedProcess:
+    def pull(
+        self,
+        urls: List[str],
+        username: Optional[str] = None,
+        password: Optional[str] = None,
+    ) -> CompletedProcess:
         """
         Pull images.
 
@@ -140,20 +131,17 @@ class ContainerdCtl(ContainerRuntimeCtlBase):
             urls = [urls]
 
         for url in urls:
-            args = ['image', 'pull']
+            args = ["image", "pull"]
             if username or password:
-                args.append('--user={}:{}'.format(username, password))
+                args.append("--user={}:{}".format(username, password))
             args.append(url)
             return self._exec(*args)
 
-    def load(self,
-             path: str) -> CompletedProcess:
+    def load(self, path: str) -> CompletedProcess:
         """
         Load an image.
 
         :param path: String file path
         :return: CompletedProcess
         """
-        return self._exec(
-            'image', 'import', path
-        )
+        return self._exec("image", "import", path)
